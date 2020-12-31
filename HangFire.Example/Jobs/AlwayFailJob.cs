@@ -7,19 +7,20 @@ using Hangfire;
 
 namespace HangFire.Example.Jobs
 {
-    public class StartCalculatorJob : IRecurringJob
+    public class AlwaysFailJob : IRecurringJob
     {
         public string CronTime { get; }
-        public string JobName { get; } = "Start Calculator";
+        public string JobName { get; } = "Always Fail";
 
-        public StartCalculatorJob()
+        public AlwaysFailJob()
         {
-            CronTime = Cron.Daily(3,0);
+            CronTime = Cron.Minutely();
 
         }
         public void ExecuteJob()
         {
-            Process.Start("calc.exe");
+            throw new Exception("I failed on purpose");
+
         }
     }
 }

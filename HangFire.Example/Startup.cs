@@ -54,6 +54,8 @@ namespace HangFire.Example
             
             services.AddSingleton<IRecurringJob>(new StartCalculatorJob());
             services.AddSingleton<IRecurringJob>(new StartFileExplorer());
+            services.AddSingleton<IRecurringJob>(new AlwaysFailJob());
+            services.AddSingleton<IRecurringJob>(new StartChromeJob());
 
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -107,7 +109,6 @@ namespace HangFire.Example
             var timezone = TimeZoneInfo.FindSystemTimeZoneById("Central Standard Time");
             foreach (var job in allRecurringJobs)
             {
-                
                 RecurringJob.AddOrUpdate(job.JobName, () => job.ExecuteJob(), job.CronTime,timezone);
             }
         }
